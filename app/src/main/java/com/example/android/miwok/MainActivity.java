@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
+import com.example.android.miwok_app.R;
 
 public class MainActivity extends AppCompatActivity {
     @Override
