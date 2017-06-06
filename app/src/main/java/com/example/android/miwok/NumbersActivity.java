@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.R;
+import com.example.android.miwok_app.R;
 
 import java.util.ArrayList;
 
