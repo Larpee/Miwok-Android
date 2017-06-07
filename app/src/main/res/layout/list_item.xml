@@ -13,7 +13,7 @@
         tools:text="Lutti" />
 
     <TextView
-        android:id="@+id/english_word"
+        android:id="@+id/default_word"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="One" />
