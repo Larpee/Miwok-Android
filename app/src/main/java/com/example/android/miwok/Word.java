@@ -13,6 +13,12 @@ public class Word {
         mMiwokWord = miwokWord;
         mDefaultTranslation = defaultTranslation;
     }
+	
+	public Word(String defaultTranslation, String miwokWord, int imageResId) {
+		mMiwokWord = miwokWord;
+		mDefaultTranslation = defaultTranslation;
+		mImageResourceId = imageResId;
+	}
 
     public String getMiwokWord() {
         return mMiwokWord;
