@@ -1,6 +1,7 @@
 package com.example.android.miwok;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 
 public class WordAdapter extends ArrayAdapter<Word> {
     int mColorResourceId;
+    MediaPlayer mMediaPlayer;
 
     public WordAdapter(Context context, ArrayList<Word> words, int color) {
         super(context, 0, words);
@@ -64,6 +66,19 @@ public class WordAdapter extends ArrayAdapter<Word> {
             // Set the ImageView's visibility to be GONE
             image.setVisibility(View.GONE);
         }
+
+        /* Set OnClickListener on item */
+        // Create MediaPlayer for the audio file
+        mMediaPlayer = MediaPlayer.create(getContext(), currentWord.getAudioResourceId());
+        // Set OnClickListener
+        listItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!mMediaPlayer.isPlaying()) {
+                    mMediaPlayer.start();
+                }
+            }
+        });
 
         return listItem;
     }
