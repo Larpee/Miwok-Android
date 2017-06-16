@@ -21,10 +21,23 @@ import java.util.ArrayList;
 public class WordAdapter extends ArrayAdapter<Word> {
     int mColorResourceId;
     MediaPlayer mMediaPlayer;
+    MediaPlayer.OnCompletionListener mOnCompletionListener = new MediaPlayer.OnCompletionListener() {
+        @Override
+        public void onCompletion(MediaPlayer mediaPlayer) {
+            releaseMediaPlayer();
+        }
+    };
 
     public WordAdapter(Context context, ArrayList<Word> words, int color) {
         super(context, 0, words);
         mColorResourceId = color;
+    }
+
+    private void releaseMediaPlayer() {
+        if (mMediaPlayer != null) {
+            mMediaPlayer.release();
+            mMediaPlayer = null;
+        }
     }
 
     @NonNull
@@ -43,7 +56,7 @@ public class WordAdapter extends ArrayAdapter<Word> {
         listItem.setBackgroundColor(color);
 
         // Get Word at the current position
-        Word currentWord = getItem(position);
+        final Word currentWord = getItem(position);
 
         // Set current Miwok Word on the appropriate TextView
         TextView miwokWord = (TextView) listItem.findViewById(R.id.miwok_word);
@@ -69,13 +82,16 @@ public class WordAdapter extends ArrayAdapter<Word> {
 
         /* Set OnClickListener on item */
         // Create MediaPlayer for the audio file
-        mMediaPlayer = MediaPlayer.create(getContext(), currentWord.getAudioResourceId());
+
         // Set OnClickListener
         listItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!mMediaPlayer.isPlaying()) {
+                    releaseMediaPlayer();
+                    mMediaPlayer = MediaPlayer.create(getContext(), currentWord.getAudioResourceId());
                     mMediaPlayer.start();
+                    mMediaPlayer.setOnCompletionListener(mOnCompletionListener);
                 }
             }
         });
