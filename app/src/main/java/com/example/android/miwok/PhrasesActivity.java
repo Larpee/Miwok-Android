@@ -7,6 +7,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 public class PhrasesActivity extends AppCompatActivity {
+    WordAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +28,13 @@ public class PhrasesActivity extends AppCompatActivity {
         words.add(new Word("Come here.", "әnni'nem", R.raw.phrase_come_here));
 
         ListView listView = (ListView) findViewById(R.id.list);
-        WordAdapter adapter = new WordAdapter(this, words, R.color.category_phrases);
+        adapter = new WordAdapter(this, words, R.color.category_phrases);
         listView.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter.releaseMediaPlayer();
     }
 }

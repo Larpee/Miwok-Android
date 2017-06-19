@@ -7,6 +7,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 public class ColorsActivity extends AppCompatActivity {
+    WordAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +26,13 @@ public class ColorsActivity extends AppCompatActivity {
         words.add(new Word("white", "kelelli", R.drawable.color_white, R.raw.color_white));
 
         ListView listView = (ListView) findViewById(R.id.list);
-        WordAdapter adapter = new WordAdapter(this, words, R.color.category_colors);
+        adapter = new WordAdapter(this, words, R.color.category_colors);
         listView.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter.releaseMediaPlayer();
     }
 }

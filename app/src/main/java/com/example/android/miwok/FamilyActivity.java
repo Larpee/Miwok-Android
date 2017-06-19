@@ -7,6 +7,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 public class FamilyActivity extends AppCompatActivity {
+    WordAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +28,13 @@ public class FamilyActivity extends AppCompatActivity {
         words.add(new Word("grandfather", "paapa", R.drawable.family_grandfather, R.raw.family_grandfather));
 
         ListView listView = (ListView) findViewById(R.id.list);
-        WordAdapter adapter = new WordAdapter(this, words, R.color.category_family);
+        adapter = new WordAdapter(this, words, R.color.category_family);
         listView.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter.releaseMediaPlayer();
     }
 }
