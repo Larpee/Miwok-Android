@@ -35,6 +35,7 @@ public class WordAdapter extends ArrayAdapter<Word> {
                 case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
                 case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
                     mMediaPlayer.pause();
+                    mMediaPlayer.seekTo(0);
                     break;
                 case AudioManager.AUDIOFOCUS_LOSS:
                     releaseMediaPlayer();
@@ -59,6 +60,8 @@ public class WordAdapter extends ArrayAdapter<Word> {
         if (mMediaPlayer != null) {
             mMediaPlayer.release();
             mMediaPlayer = null;
+
+            mAudioManager.abandonAudioFocus(mOnAudioFocusChangeListener);
         }
     }
 
@@ -112,10 +115,12 @@ public class WordAdapter extends ArrayAdapter<Word> {
                 // FINISH REQUESTING AUDIO FOCUS
                 int result = mAudioManager.requestAudioFocus(mOnAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
 
-                releaseMediaPlayer();
-                mMediaPlayer = MediaPlayer.create(getContext(), currentWord.getAudioResourceId());
-                mMediaPlayer.setOnCompletionListener(mOnCompletionListener);
-                mMediaPlayer.start();
+                if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+                    releaseMediaPlayer();
+                    mMediaPlayer = MediaPlayer.create(getContext(), currentWord.getAudioResourceId());
+                    mMediaPlayer.setOnCompletionListener(mOnCompletionListener);
+                    mMediaPlayer.start();
+                }
             }
         });
 
