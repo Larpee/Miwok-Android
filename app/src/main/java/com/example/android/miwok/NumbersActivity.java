@@ -1,6 +1,5 @@
 package com.example.android.miwok;
 
-import android.media.AudioManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
@@ -9,7 +8,6 @@ import java.util.ArrayList;
 
 public class NumbersActivity extends AppCompatActivity {
     WordAdapter adapter;
-    AudioManager audioManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

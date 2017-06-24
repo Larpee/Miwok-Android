@@ -19,13 +19,13 @@ import java.util.ArrayList;
  * Created by pilar_000 on 07/06/2017.
  */
 
-public class WordAdapter extends ArrayAdapter<Word> {
+class WordAdapter extends ArrayAdapter<Word> {
     // COULD BE PRIVATE [CHECK]
-    AudioManager mAudioManager;
+    private AudioManager mAudioManager;
     private int mColorResourceId;
     private MediaPlayer mMediaPlayer;
     // COULD BE PRIVATE [CHECK]
-    AudioManager.OnAudioFocusChangeListener mOnAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
+    private AudioManager.OnAudioFocusChangeListener mOnAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
         @Override
         public void onAudioFocusChange(int focusChange) {
             switch (focusChange) {
@@ -78,7 +78,8 @@ public class WordAdapter extends ArrayAdapter<Word> {
 
         // Set the background color of the view to be the category's color
         int color = ContextCompat.getColor(getContext(), mColorResourceId);
-        listItem.setBackgroundColor(color);
+        View linearLayout = listItem.findViewById(R.id.linear_layout);
+        linearLayout.setBackgroundColor(color);
 
         // Get Word at the current position
         final Word currentWord = getItem(position);
